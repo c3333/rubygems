@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'benchmark'
 require 'rubygems/test_case'
 require 'pathname'
 require 'stringio'
@@ -169,6 +168,7 @@ end
       install_specs base
       base.activate
 
+      require "benchmark"
       tms = Benchmark.measure do
         assert_raises(LoadError) { require 'no_such_file_foo' }
       end
