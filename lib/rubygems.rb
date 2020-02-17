@@ -1316,7 +1316,6 @@ An Array (#{env.inspect}) was passed in from #{caller[3]}
   autoload :Dependency,         File.expand_path('rubygems/dependency', __dir__)
   autoload :DependencyList,     File.expand_path('rubygems/dependency_list', __dir__)
   autoload :Installer,          File.expand_path('rubygems/installer', __dir__)
-  autoload :Licenses,           File.expand_path('rubygems/util/licenses', __dir__)
   autoload :NameTuple,          File.expand_path('rubygems/name_tuple', __dir__)
   autoload :PathSupport,        File.expand_path('rubygems/path_support', __dir__)
   autoload :Platform,           File.expand_path('rubygems/platform', __dir__)

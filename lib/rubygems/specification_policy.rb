@@ -1,4 +1,5 @@
 require 'rubygems/user_interaction'
+require 'rubygems/util/licenses'
 
 class Gem::SpecificationPolicy
 

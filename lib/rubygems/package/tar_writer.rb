@@ -5,7 +5,7 @@
 # See LICENSE.txt for additional licensing information.
 #++
 
-require 'digest'
+require 'digest/sha2'
 
 ##
 # Allows writing of tar files
