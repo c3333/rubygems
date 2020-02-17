@@ -27,6 +27,8 @@ rescue LoadError
 end
 
 require 'bundler'
+require 'bundler/remote_specification'
+require 'bundler/lockfile_generator'
 
 require 'minitest/autorun'
 
@@ -36,6 +38,8 @@ require 'rubygems/deprecate'
 
 require 'fileutils'
 require 'pathname'
+require 'benchmark'
+require 'io/console'
 require 'pp'
 require 'rubygems/package'
 require 'shellwords'
@@ -424,14 +428,7 @@ class Gem::TestCase < Minitest::Test
     Dir.chdir @current_dir
 
     $LOAD_PATH.replace @orig_LOAD_PATH
-    if @orig_LOADED_FEATURES
-      paths = @orig_LOAD_PATH.map {|path| File.join(File.expand_path(path), "/")}
-      ($LOADED_FEATURES - @orig_LOADED_FEATURES).each do |feat|
-        unless paths.any? {|path| feat.start_with?(path)}
-          $LOADED_FEATURES.delete(feat)
-        end
-      end
-    end
+    $LOADED_FEATURES.replace @orig_LOADED_FEATURES
 
     RbConfig::CONFIG['arch'] = @orig_arch
 
