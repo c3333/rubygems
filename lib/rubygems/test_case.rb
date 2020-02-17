@@ -421,17 +421,13 @@ class Gem::TestCase < Minitest::Test
   # tempdir
 
   def teardown
-    $LOAD_PATH.replace @orig_LOAD_PATH if @orig_LOAD_PATH
+    $LOAD_PATH.replace @orig_LOAD_PATH
     if @orig_LOADED_FEATURES
-      if @orig_LOAD_PATH
-        paths = @orig_LOAD_PATH.map {|path| File.join(File.expand_path(path), "/")}
-        ($LOADED_FEATURES - @orig_LOADED_FEATURES).each do |feat|
-          unless paths.any? {|path| feat.start_with?(path)}
-            $LOADED_FEATURES.delete(feat)
-          end
+      paths = @orig_LOAD_PATH.map {|path| File.join(File.expand_path(path), "/")}
+      ($LOADED_FEATURES - @orig_LOADED_FEATURES).each do |feat|
+        unless paths.any? {|path| feat.start_with?(path)}
+          $LOADED_FEATURES.delete(feat)
         end
-      else
-        $LOADED_FEATURES.replace @orig_LOADED_FEATURES
       end
     end
 
