@@ -421,6 +421,8 @@ class Gem::TestCase < Minitest::Test
   # tempdir
 
   def teardown
+    Dir.chdir @current_dir
+
     $LOAD_PATH.replace @orig_LOAD_PATH
     if @orig_LOADED_FEATURES
       paths = @orig_LOAD_PATH.map {|path| File.join(File.expand_path(path), "/")}
@@ -436,8 +438,6 @@ class Gem::TestCase < Minitest::Test
     if defined? Gem::RemoteFetcher
       Gem::RemoteFetcher.fetcher = nil
     end
-
-    Dir.chdir @current_dir
 
     FileUtils.rm_rf @tempdir
 
