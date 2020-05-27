@@ -2668,6 +2668,3 @@ class Gem::Specification < Gem::BasicSpecification
   end
 
 end
-
-# DOC: What is this and why is it here, randomly, at the end of this file?
-Gem.clear_paths
