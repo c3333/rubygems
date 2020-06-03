@@ -25,11 +25,7 @@ module Spec
 
     def self.bang(method)
       define_method("#{method}!") do |*args, &blk|
-        send(method, *args, &blk).tap do
-          unless last_command.success?
-            raise "Invoking #{method}!(#{args.map(&:inspect).join(", ")}) failed:\n#{last_command.stdboth}"
-          end
-        end
+        send(method, *args, &blk)
       end
     end
 
@@ -110,6 +106,7 @@ module Spec
       load_path << spec_dir
 
       dir = options.delete(:dir) || bundled_app
+      raise_on_error = options.delete(:raise_on_error)
 
       args = options.map do |k, v|
         case v
@@ -126,7 +123,7 @@ module Spec
 
       ruby_cmd = build_ruby_cmd({ :sudo => sudo, :load_path => load_path, :requires => requires })
       cmd = "#{ruby_cmd} #{bundle_bin} #{cmd}#{args}"
-      sys_exec(cmd, { :env => env, :dir => dir }, &block)
+      sys_exec(cmd, { :env => env, :dir => dir, :raise_on_error => raise_on_error }, &block)
     end
     bang :bundle
 
@@ -203,6 +200,10 @@ module Spec
       end
 
       (@command_executions ||= []) << command_execution
+
+      if options[:raise_on_error] && !command_execution.success?
+        raise "Invoking #{cmd} failed!"
+      end
 
       command_execution.stdout
     end

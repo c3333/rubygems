@@ -10,24 +10,24 @@ RSpec.describe "install with --deployment or --frozen" do
 
   context "with CLI flags", :bundler => "< 3" do
     it "fails without a lockfile and says that --deployment requires a lock" do
-      bundle "install --deployment"
+      bundle "install --deployment", :raise_on_error => false
       expect(err).to include("The --deployment flag requires a Gemfile.lock")
     end
 
     it "fails without a lockfile and says that --frozen requires a lock" do
-      bundle "install --frozen"
+      bundle "install --frozen", :raise_on_error => false
       expect(err).to include("The --frozen flag requires a Gemfile.lock")
     end
 
     it "disallows --deployment --system" do
-      bundle "install --deployment --system"
+      bundle "install --deployment --system", :raise_on_error => false
       expect(err).to include("You have specified both --deployment")
       expect(err).to include("Please choose only one option")
       expect(exitstatus).to eq(15) if exitstatus
     end
 
     it "disallows --deployment --path --system" do
-      bundle "install --deployment --path . --system"
+      bundle "install --deployment --path . --system", :raise_on_error => false
       expect(err).to include("You have specified both --path")
       expect(err).to include("as well as --system")
       expect(err).to include("Please choose only one option")
@@ -35,7 +35,7 @@ RSpec.describe "install with --deployment or --frozen" do
     end
 
     it "doesn't mess up a subsequent `bundle install` after you try to deploy without a lock" do
-      bundle "install --deployment"
+      bundle "install --deployment", :raise_on_error => false
       bundle! :install
       expect(the_bundle).to include_gems "rack 1.0"
     end
@@ -134,7 +134,7 @@ RSpec.describe "install with --deployment or --frozen" do
     end
 
     it "prevents the replace by default" do
-      bundle :install
+      bundle :install, :raise_on_error => false
 
       expect(err).to match(/The list of sources changed/)
     end
@@ -153,7 +153,7 @@ RSpec.describe "install with --deployment or --frozen" do
       before { bundle! "config set allow_deployment_source_credential_changes false" }
 
       it "prevents the replace" do
-        bundle :install
+        bundle :install, :raise_on_error => false
 
         expect(err).to match(/The list of sources changed/)
       end
@@ -173,7 +173,7 @@ RSpec.describe "install with --deployment or --frozen" do
       before { ENV["BUNDLE_ALLOW_DEPLOYMENT_SOURCE_CREDENTIAL_CHANGES"] = "false" }
 
       it "prevents the replace" do
-        bundle :install
+        bundle :install, :raise_on_error => false
 
         expect(err).to match(/The list of sources changed/)
       end
@@ -215,7 +215,7 @@ RSpec.describe "install with --deployment or --frozen" do
       G
 
       bundle "config --local deployment true"
-      bundle :install
+      bundle :install, :raise_on_error => false
       expect(err).to include("deployment mode")
       expect(err).to include("You have added to the Gemfile")
       expect(err).to include("* rack-obama")
@@ -253,7 +253,7 @@ RSpec.describe "install with --deployment or --frozen" do
 
       bundle "config --local path .bundle"
       bundle "config --local deployment true"
-      bundle :install
+      bundle :install, :raise_on_error => false
       expect(err).to include("The path `#{lib_path("path_gem-1.0")}` does not exist.")
     end
 
@@ -265,7 +265,7 @@ RSpec.describe "install with --deployment or --frozen" do
       G
 
       ENV["BUNDLE_FROZEN"] = "1"
-      bundle "install"
+      bundle "install", :raise_on_error => false
       expect(err).to include("deployment mode")
       expect(err).to include("You have added to the Gemfile")
       expect(err).to include("* rack-obama")
@@ -281,7 +281,7 @@ RSpec.describe "install with --deployment or --frozen" do
       G
 
       ENV["BUNDLE_DEPLOYMENT"] = "true"
-      bundle "install"
+      bundle "install", :raise_on_error => false
       expect(err).to include("deployment mode")
       expect(err).to include("You have added to the Gemfile")
       expect(err).to include("* rack-obama")
@@ -324,7 +324,7 @@ RSpec.describe "install with --deployment or --frozen" do
       G
 
       bundle "config --local deployment true"
-      bundle :install
+      bundle :install, :raise_on_error => false
       expect(err).to include("deployment mode")
       expect(err).to include("You have added to the Gemfile:\n* activesupport\n\n")
       expect(err).to include("You have deleted from the Gemfile:\n* rack")
@@ -338,7 +338,7 @@ RSpec.describe "install with --deployment or --frozen" do
       G
 
       bundle "config --local deployment true"
-      bundle :install
+      bundle :install, :raise_on_error => false
       expect(err).to include("deployment mode")
       expect(err).to include("You have added to the Gemfile:\n* source: git://hubz.com (at master)")
       expect(err).not_to include("You have changed in the Gemfile")
@@ -358,7 +358,7 @@ RSpec.describe "install with --deployment or --frozen" do
       G
 
       bundle "config --local deployment true"
-      bundle :install
+      bundle :install, :raise_on_error => false
       expect(err).to include("deployment mode")
       expect(err).to include("You have deleted from the Gemfile:\n* source: #{lib_path("rack-1.0")} (at master@#{revision_for(lib_path("rack-1.0"))[0..6]}")
       expect(err).not_to include("You have added to the Gemfile")
@@ -382,7 +382,7 @@ RSpec.describe "install with --deployment or --frozen" do
       G
 
       bundle "config --local deployment true"
-      bundle :install
+      bundle :install, :raise_on_error => false
       expect(err).to include("deployment mode")
       expect(err).to include("You have changed in the Gemfile:\n* rack from `no specified source` to `#{lib_path("rack")} (at master@#{revision_for(lib_path("rack"))[0..6]})`")
       expect(err).not_to include("You have added to the Gemfile")

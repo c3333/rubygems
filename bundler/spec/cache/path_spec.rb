@@ -79,7 +79,7 @@ RSpec.describe "bundle cache with path" do
     bundle "config set cache_all true"
     bundle :cache
 
-    install_gemfile <<-G
+    install_gemfile <<-G, :raise_on_error => false
       gem "bar", :path => '#{lib_path("bar-1.0")}'
     G
 
@@ -135,7 +135,7 @@ RSpec.describe "bundle cache with path" do
       gem "baz", :path => '#{lib_path("baz-1.0")}'
     G
 
-    bundle "cache --no-all"
+    bundle "cache --no-all", :raise_on_error => false
     expect(bundled_app("vendor/cache/baz-1.0")).not_to exist
   end
 end

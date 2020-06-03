@@ -356,7 +356,7 @@ RSpec.describe "bundle install with gems on multiple sources" do
           end
 
           it "does not find the dependency" do
-            bundle :install
+            bundle :install, :raise_on_error => false
             expect(err).to include("Could not find gem 'rack', which is required by gem 'depends_on_rack', in any of the relevant sources")
           end
         end
@@ -396,7 +396,7 @@ RSpec.describe "bundle install with gems on multiple sources" do
       end
 
       it "does not install the gem" do
-        bundle :install
+        bundle :install, :raise_on_error => false
         expect(err).to include("Could not find gem 'not_in_repo1'")
       end
     end
