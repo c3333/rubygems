@@ -53,7 +53,7 @@ RSpec.describe "bundle update" do
         gem "rack-obama"
         exit!
       G
-      bundle "update", :all => true
+      bundle "update", :all => true, :raise_on_error => false
       expect(bundled_app_lock).to exist
     end
   end
@@ -298,7 +298,7 @@ RSpec.describe "bundle update" do
 
     it "should suggest different command when frozen is set globally", :bundler => "3" do
       bundle! "config set --global deployment true"
-      bundle "update", :all => true
+      bundle "update", :all => true, :raise_on_error => false
       expect(err).to match(/You are trying to install in deployment mode after changing.your Gemfile/m).
         and match(/freeze \nby running `bundle config unset deployment`./m)
     end

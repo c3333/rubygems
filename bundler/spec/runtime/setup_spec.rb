@@ -285,7 +285,6 @@ RSpec.describe "Bundler.setup" do
         G
 
         bundle "install"
-        bundle "install --deployment"
 
         ENV["BUNDLE_GEMFILE"] = "Gemfile"
         ruby <<-R
@@ -1374,7 +1373,7 @@ end
         gem "rack"
       G
 
-      ruby <<-RUBY
+      ruby <<-RUBY, :raise_on_error => false
         require "#{lib_dir}/bundler/setup"
         Object.new.gem "rack"
         puts "FAIL"

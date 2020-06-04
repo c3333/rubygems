@@ -67,7 +67,8 @@ RSpec.describe "install with --deployment or --frozen" do
     skip "doesn't find bundle" if Gem.win_platform?
 
     bundle! :install
-    bundle "install --deployment"
+    bundle "config --local deployment true"
+    bundle :install
     bundle! "exec bundle check", :env => { "PATH" => path }
   end
 

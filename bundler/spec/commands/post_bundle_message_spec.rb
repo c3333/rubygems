@@ -123,7 +123,7 @@ RSpec.describe "post bundle message" do
       end
 
       it "should report a helpful error message", :bundler => "3" do
-        install_gemfile <<-G
+        install_gemfile <<-G, :raise_on_error => false
           source "#{file_uri_for(gem_repo1)}"
           gem "rack"
           gem "not-a-gem", :group => :development
