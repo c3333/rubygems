@@ -168,7 +168,7 @@ RSpec.describe "bundle exec" do
   context "with default gems" do
     let(:system_gems_to_install) { [] }
 
-    let(:default_irb_version) { ruby "gem 'irb', '< 999999'; require 'irb'; puts IRB::VERSION" }
+    let(:default_irb_version) { ruby "gem 'irb', '< 999999'; require 'irb'; puts IRB::VERSION", :raise_on_error => false }
 
     context "when not specified in Gemfile" do
       before do

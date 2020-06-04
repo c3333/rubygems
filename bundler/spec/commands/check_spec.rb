@@ -213,14 +213,14 @@ RSpec.describe "bundle check" do
   it "should not crash when called multiple times on a new machine" do
     gemfile <<-G
       gem 'rails', '3.0.0.beta3'
-      gem 'paperclip', :git => 'git://github.com/thoughtbot/paperclip.git'
+      gem 'haml'
     G
 
     simulate_new_machine
     bundle "check", :raise_on_error => false
     last_out = out
     3.times do
-      bundle :check
+      bundle :check, :raise_on_error => false
       expect(out).to eq(last_out)
     end
   end
