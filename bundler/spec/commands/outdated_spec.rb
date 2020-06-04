@@ -537,18 +537,21 @@ RSpec.describe "bundle outdated" do
 
   context "after bundle install --deployment", :bundler => "< 3" do
     before do
-      install_gemfile <<-G, :deployment => true, :raise_on_error => false
+      gemfile <<-G
         source "#{file_uri_for(gem_repo2)}"
 
         gem "rack"
         gem "foo"
       G
+
+      bundle "lock"
+      bundle "install --deployment"
     end
 
     it "outputs a helpful message about being in deployment mode" do
       update_repo2 { build_gem "activesupport", "3.0" }
 
-      bundle "outdated"
+      bundle "outdated", :raise_on_error => false
       expect(last_command).to be_failure
       expect(err).to include("You are trying to check outdated gems in deployment mode.")
       expect(err).to include("Run `bundle outdated` elsewhere.")

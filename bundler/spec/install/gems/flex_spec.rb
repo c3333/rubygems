@@ -185,7 +185,7 @@ RSpec.describe "bundle flex_install" do
 
     it "does not install gems whose dependencies are not met" do
       bundle :install, :raise_on_error => false
-      ruby <<-RUBY
+      ruby <<-RUBY, :raise_on_error => false
         require 'bundler/setup'
       RUBY
       expect(err).to match(/could not find gem 'rack-obama/i)

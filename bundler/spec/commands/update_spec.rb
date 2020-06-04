@@ -694,12 +694,12 @@ RSpec.describe "bundle update" do
   end
 
   it "shows error message when Gemfile.lock is not preset and gem is specified" do
-    install_gemfile <<-G, :raise_on_error => false
+    gemfile <<-G
       source "#{file_uri_for(gem_repo2)}"
       gem "activesupport"
     G
 
-    bundle "update nonexisting"
+    bundle "update nonexisting", :raise_on_error => false
     expect(err).to include("This Bundle hasn't been installed yet. Run `bundle install` to update and install the bundled gems.")
     expect(exitstatus).to eq(22) if exitstatus
   end
@@ -778,8 +778,6 @@ RSpec.describe "bundle update --ruby" do
       G
     end
     it "shows a helpful error message" do
-      bundle "update --ruby"
-
       expect(err).to include("Your Ruby version is 2.2.2, but your Gemfile specified ~> 2.1.0")
     end
   end

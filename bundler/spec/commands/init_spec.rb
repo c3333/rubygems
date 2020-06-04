@@ -15,7 +15,7 @@ RSpec.describe "bundle init" do
     end
 
     it "does not change existing Gemfiles" do
-      expect { bundle :init }.not_to change { File.read(bundled_app_gemfile) }
+      expect { bundle :init, :raise_on_error => false }.not_to change { File.read(bundled_app_gemfile) }
     end
 
     it "notifies the user that an existing Gemfile already exists" do
@@ -112,7 +112,7 @@ RSpec.describe "bundle init" do
       end
 
       it "does not change existing Gemfiles" do
-        expect { bundle :init }.not_to change { File.read(bundled_app("gems.rb")) }
+        expect { bundle :init, :raise_on_error => false }.not_to change { File.read(bundled_app("gems.rb")) }
       end
 
       it "notifies the user that an existing gems.rb already exists" do

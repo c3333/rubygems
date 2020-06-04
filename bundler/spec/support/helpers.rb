@@ -176,8 +176,8 @@ module Spec
       "#{Gem.ruby} -S #{ENV["GEM_PATH"]}/bin/rake"
     end
 
-    def git(cmd, path)
-      sys_exec("git #{cmd}", :dir => path)
+    def git(cmd, path, options = {})
+      sys_exec("git #{cmd}", options.merge(:dir => path))
     end
 
     def sys_exec(cmd, options = {})
@@ -201,7 +201,7 @@ module Spec
 
       (@command_executions ||= []) << command_execution
 
-      if options[:raise_on_error] && !command_execution.success?
+      unless options[:raise_on_error] == false || command_execution.success?
         raise "Invoking #{cmd} failed!"
       end
 

@@ -138,7 +138,7 @@ RSpec.describe "bundle add" do
     bundle "add 'werk_it'", :raise_on_error => false
     expect(err).to match("Could not find gem 'werk_it' in")
 
-    bundle "add 'werk_it' -s='#{file_uri_for(gem_repo2)}'"
+    bundle "add 'werk_it' -s='#{file_uri_for(gem_repo2)}'", :raise_on_error => false
     expect(err).to match("Could not find gem 'werk_it' in rubygems repository")
   end
 
@@ -146,7 +146,7 @@ RSpec.describe "bundle add" do
     bundle "add 'baz' --source='http://badhostasdf'", :raise_on_error => false
     expect(err).to include("Could not reach host badhostasdf. Check your network connection and try again.")
 
-    bundle "add 'baz' --source='file://does/not/exist'"
+    bundle "add 'baz' --source='file://does/not/exist'", :raise_on_error => false
     expect(err).to include("Could not fetch specs from file://does/not/exist/")
   end
 

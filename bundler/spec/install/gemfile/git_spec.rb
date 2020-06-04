@@ -219,7 +219,7 @@ RSpec.describe "bundle install with git sources" do
       sys_exec("git update-ref -m \"Bundler Spec!\" refs/bundler/1 master~1", :dir => lib_path("foo-1.0"))
 
       # want to ensure we don't fallback to HEAD
-      update_git "foo", :path => lib_path("foo-1.0"), :branch => "rando" do |s|
+      update_git "foo", :path => lib_path("foo-1.0"), :branch => "random" do |s|
         s.write("lib/foo.rb", "raise 'FAIL'")
       end
 
