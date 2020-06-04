@@ -887,7 +887,7 @@ __FILE__: #{path.to_s.inspect}
 
     context "with a system gem that shadows a default gem" do
       let(:openssl_version) { "99.9.9" }
-      let(:expected) { ruby "gem 'openssl', '< 999999'; require 'openssl'; puts OpenSSL::VERSION", :artifice => nil }
+      let(:expected) { ruby "gem 'openssl', '< 999999'; require 'openssl'; puts OpenSSL::VERSION", :artifice => nil, :raise_on_error => false }
 
       it "only leaves the default gem in the stdlib available" do
         skip "https://github.com/rubygems/bundler/issues/6898" if Gem.win_platform?
