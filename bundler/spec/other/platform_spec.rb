@@ -348,7 +348,7 @@ G
     end
 
     it "doesn't install when engine version doesn't match", :jruby do
-      install_gemfile <<-G
+      install_gemfile <<-G, :raise_on_error => false
         source "#{file_uri_for(gem_repo1)}"
         gem "rack"
 
@@ -456,7 +456,7 @@ G
         #{engine_version_incorrect}
       G
 
-      bundle :check
+      bundle :check, :raise_on_error => false
       should_be_engine_version_incorrect
     end
 
@@ -549,7 +549,7 @@ G
         build_gem "activesupport", "3.0"
       end
 
-      bundle :update, :all => true
+      bundle :update, :all => true, :raise_on_error => false
       should_be_engine_incorrect
     end
 
@@ -565,7 +565,7 @@ G
         build_gem "activesupport", "3.0"
       end
 
-      bundle :update, :all => true
+      bundle :update, :all => true, :raise_on_error => false
       should_be_engine_version_incorrect
     end
 
@@ -649,7 +649,7 @@ G
         #{engine_version_incorrect}
       G
 
-      bundle "show rails"
+      bundle "show rails", :raise_on_error => false
       should_be_engine_version_incorrect
     end
 
@@ -729,7 +729,7 @@ G
         #{engine_version_incorrect}
       G
 
-      bundle :cache
+      bundle :cache, :raise_on_error => false
       should_be_engine_version_incorrect
     end
 
@@ -806,7 +806,7 @@ G
         #{engine_version_incorrect}
       G
 
-      bundle :cache
+      bundle :cache, :raise_on_error => false
       should_be_engine_version_incorrect
     end
 
@@ -980,7 +980,7 @@ G
         #{engine_version_incorrect}
       G
 
-      bundle "console"
+      bundle "console", :raise_on_error => false
       should_be_engine_version_incorrect
     end
 
@@ -1075,7 +1075,7 @@ G
     end
 
     it "fails when engine version doesn't match", :jruby do
-      install_gemfile <<-G
+      install_gemfile <<-G, :raise_on_error => false
         source "#{file_uri_for(gem_repo1)}"
         gem "yard"
         gem "rack"
@@ -1162,7 +1162,7 @@ G
         #{ruby_version_correct_engineless}
       G
 
-      bundle "outdated"
+      bundle "outdated", :raise_on_error => false
 
       expected_output = <<~TABLE.gsub("x", "\\\h").tr(".", "\.").strip
         Gem            Current      Latest       Requested  Groups
@@ -1223,7 +1223,7 @@ G
         #{engine_version_incorrect}
       G
 
-      bundle "outdated"
+      bundle "outdated", :raise_on_error => false
       should_be_engine_version_incorrect
     end
 
@@ -1241,7 +1241,7 @@ G
         #{patchlevel_incorrect}
       G
 
-      bundle "outdated"
+      bundle "outdated", :raise_on_error => false
       should_be_patchlevel_incorrect
     end
 
@@ -1259,7 +1259,7 @@ G
         #{patchlevel_fixnum}
       G
 
-      bundle "outdated"
+      bundle "outdated", :raise_on_error => false
       should_be_patchlevel_fixnum
     end
   end

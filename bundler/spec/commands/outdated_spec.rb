@@ -614,7 +614,7 @@ RSpec.describe "bundle outdated" do
         gem "laduradura", '= 5.15.2', :platforms => [:ruby, :jruby]
       G
 
-      bundle "outdated"
+      bundle "outdated", :raise_on_error => false
 
       expected_output = <<~TABLE.strip
         Gem         Current  Latest  Requested  Groups
